@@ -14,51 +14,44 @@
         </div>
 
         <div class="mainArea">
-            <div class="itemCardRow">
-                <div class="itemCard">
-                    <div class="itemCardTitle">Butterfly!!</div>
-                    <img class="itemCardThumbnail" src="images/SampleProductThumbnail.jpg">
-                    <button class="itemCardButton">Download</button>
-                </div>
-                <div class="itemCard">
-                    <div class="itemCardTitle">Butterfly!!</div>
-                    <img class="itemCardThumbnail" src="images/SampleProductThumbnail.jpg">
-                    <button class="itemCardButton">Download</button>
-                </div>
-                <div class="itemCard">
-                    <div class="itemCardTitle">Butterfly!!</div>
-                    <img class="itemCardThumbnail" src="images/SampleProductThumbnail.jpg">
-                    <button class="itemCardButton">Download</button>
-                </div>
-                <div class="itemCard">
-                    <div class="itemCardTitle">Butterfly!!</div>
-                    <img class="itemCardThumbnail" src="images/SampleProductThumbnail.jpg">
-                    <button class="itemCardButton">Download</button>
-                </div>
-            </div>
-
-            <div class="itemCardRow">
-                <div class="itemCard">
-                    <div class="itemCardTitle">Butterfly!!</div>
-                    <img class="itemCardThumbnail" src="images/SampleProductThumbnail.jpg">
-                    <button class="itemCardButton">Download</button>
-                </div>
-                <div class="itemCard">
-                    <div class="itemCardTitle">Butterfly!!</div>
-                    <img class="itemCardThumbnail" src="images/SampleProductThumbnail.jpg">
-                    <button class="itemCardButton">Download</button>
-                </div>
-                <div class="itemCard">
-                    <div class="itemCardTitle">Butterfly!!</div>
-                    <img class="itemCardThumbnail" src="images/SampleProductThumbnail.jpg">
-                    <button class="itemCardButton">Download</button>
-                </div>
-                <div class="itemCard">
-                    <div class="itemCardTitle">Butterfly!!</div>
-                    <img class="itemCardThumbnail" src="images/SampleProductThumbnail.jpg">
-                    <button class="itemCardButton">Download</button>
-                </div>
+            <div id="itemList" class="itemCardRow">
+                <!-- Items will be placed here by Javascript code -->
             </div>
         </div>
     </body>
+
+    <script>
+        let toys = [
+            {
+                name: "Toy0",
+                image: "images/SampleProductThumbnail.jpg",
+                starRating: 4.5,
+                downloadLink: "shfdjskhfkjsd"
+            },
+            {
+                name: "Jason's favourite Toy",
+                image: "images/SampleProductThumbnail.jpg",
+                starRating: 5,
+                downloadLink: "hdkjfhdskjhfdkjshfdjskhfkjsd2"
+            },
+            {
+                name: "Toy2",
+                image: "images/SampleProductThumbnail.jpg",
+                starRating: 3.5,
+                downloadLink: "hdkjfhdskjhfdkjshfdjskhfkjsd3"
+            },
+            {
+                name: "Toy3",
+                image: "images/SampleProductThumbnail.jpg",
+                starRating: 3.5,
+                downloadLink: "hdkjfhdskjhfdkjshfdjskhfkjsd3"
+            }
+        ];
+
+        let itemList = document.getElementById('itemList');
+
+        for (let toy of toys) {
+            itemList.innerHTML += '<div class="itemCard"><div class="itemCardTitle">' + toy.name + '</div><img class="itemCardThumbnail" src="' + toy.image + '"><button class="itemCardButton">Download</button></div>';
+        }
+    </script>
 </html>
