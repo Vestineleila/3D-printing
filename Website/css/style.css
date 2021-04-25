@@ -1,6 +1,32 @@
 html, body {
     margin: 0px;
+    font-family: 'Lato', sans-serif;
 }
+
+.itemCardButton {
+    background-color: #6600cc;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+  
+.headerSearchButton {
+    background-color: #6600cc;
+    border-style: solid;
+    border-color: white;
+    color: white;
+    padding: 15px 32px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
 
 .headerBar {
     height: 80px;
@@ -30,6 +56,9 @@ html, body {
     height: 50px;
     margin-left: 10px;
     margin-right: 10px;
+    background-image: url("/images/icon_search.png");
+    background-repeat: no-repeat;
+    background-position: center; 
 }
 
 .itemCardRow {
