@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <title>Vestine's 3D Stuff</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+
+        <div class="headerBar">
+            <a href="index.html"><img class="headerLogo" src="images/Vestines3DStuffLogo.png"></a>
+            <div class="headerSpacer"></div>
+            <input class="headerSearchInput" type="text" placeholder="Search..."/>
+            <button class="headerSearchButton">
+        </div>
+        <div class="Logout">
+            <button type="Logout">Logout</button>
+        </div>
+
+        <table style="width: 100%">
+            <div class="thead">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Controls</th>
+                </tr>
+            </thead>
+        </div>
+            <tbody id="itemList">
+                <!-- Items will be placed here by Javascript code -->
+            </tbody>
+            
+        </table>
+        <div class="button">
+        <button type = "button"><img src = "images/icon_add.jpg" name="edit" width="30" height="30"></button>
+        </div>     
+    </body>
+
+    <script>
+        // Async operation - we need to wait for it to finish!
+        async function loadToys() {
+            let toysResponse = await fetch("toys.json");
+            let toys = await toysResponse.json();
+
+            let itemList = document.getElementById('itemList');
+
+            for (let toy of toys) {
+
+                itemList.innerHTML += 
+                `<tr>
+                    <td>${toy.id}</td>
+                    <td>${toy.name}</td>
+                    <td>${toy.description}</td>
+                    <td>
+                        <a href="edit_toy.html?id=${toy.id}"><button type = "button"><img src = "images/icon_edit.png" name="edit" width="18" height="20"></button></a>
+                        <button type = "button"><img src = "images/icon_delete.png" name="edit" width="18" height="20" onclick="deleteToy(${toy.id})"></button></td>
+                </tr>`;
+            }
+        }
+
+        loadToys();
+
+        async function deleteToy(id) {
+            console.log(`Deleting toy ${id}`);
+            await fetch(`deleteToy/${id}`);
+        }
+    </script>
+</html> 

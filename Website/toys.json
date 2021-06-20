@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "name": "nsfdhjfdlkjhjlks",
+        "description": "A toy!!djahsdkjhsadkjhsakj",
+        "image": "images/SampleProductThumbnail.jpg",
+        "category": "Toys",
+        "status": "Public"
+    },
+    {
+        "id": 2,
+        "name": "Toy2",
+        "description": "Another toy!!",
+        "image": "images/SampleProductThumbnail.jpg",
+        "category": "Earing",
+        "status": "Public"
+    },
+    {
+        "id": 3,
+        "name": "Jason's favourite toy",
+        "description": "A toy!!",
+        "image": "images/SampleProductThumbnail.jpg",
+        "category": "Toys",
+        "status": "Private"
+    },
+    {
+        "id": 4,
+        "name": "Key holder",
+        "description": "It holds your keys =)",
+        "image": "images/Key holder.jpg",
+        "category": "Key holders",
+        "status": "Public"
+    }
+]

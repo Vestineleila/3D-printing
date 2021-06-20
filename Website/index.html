@@ -2,6 +2,8 @@
     <head>
         <title>Vestine's 3D Stuff</title>
         <link rel="stylesheet" href="css/style.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     </head>
 
     <body>
@@ -13,7 +15,7 @@
             <button class="headerSearchButton">
         </div>
 
-        <div class="mainArea">
+        <div class="mainArea"> 
             <div id="itemList" class="itemCardRow">
                 <!-- Items will be placed here by Javascript code -->
             </div>
@@ -21,37 +23,20 @@
     </body>
 
     <script>
-        let toys = [
-            {
-                name: "Toy0",
-                image: "images/SampleProductThumbnail.jpg",
-                starRating: 4.5,
-                downloadLink: "shfdjskhfkjsd"
-            },
-            {
-                name: "Jason's favourite Toy",
-                image: "images/SampleProductThumbnail.jpg",
-                starRating: 5,
-                downloadLink: "hdkjfhdskjhfdkjshfdjskhfkjsd2"
-            },
-            {
-                name: "Toy2",
-                image: "images/SampleProductThumbnail.jpg",
-                starRating: 3.5,
-                downloadLink: "hdkjfhdskjhfdkjshfdjskhfkjsd3"
-            },
-            {
-                name: "Toy3",
-                image: "images/SampleProductThumbnail.jpg",
-                starRating: 3.5,
-                downloadLink: "hdkjfhdskjhfdkjshfdjskhfkjsd3"
+        // Async operation - we need to wait for it to finish!
+        async function loadToys() {
+            let toysResponse = await fetch("toys.json");
+            let toys = await toysResponse.json();
+
+            let itemList = document.getElementById('itemList');
+
+            for (let toy of toys) {
+                if (toy.status == "Public") {
+                    itemList.innerHTML += '<div class="itemCard"><div class="itemCardTitle">' + toy.name + '</div><img class="itemCardThumbnail" src="' + toy.image + '"><button class="itemCardButton">Download</button></div>';
+                }
             }
-        ];
-
-        let itemList = document.getElementById('itemList');
-
-        for (let toy of toys) {
-            itemList.innerHTML += '<div class="itemCard"><div class="itemCardTitle">' + toy.name + '</div><img class="itemCardThumbnail" src="' + toy.image + '"><button class="itemCardButton">Download</button></div>';
         }
+
+        loadToys();
     </script>
 </html>
