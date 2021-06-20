@@ -1,0 +1,93 @@
+<html>
+    <head>
+        <title>Vestine's 3D Stuff</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+
+        <div class="headerBar">
+            <a href="index.html"><img class="headerLogo" src="images/Vestines3DStuffLogo.png"></a>
+            <div class="headerSpacer"></div>
+            <input class="headerSearchInput" type="text" placeholder="Search..."/>
+            <button class="headerSearchButton">
+        </div>
+        <div class="logout">
+        <button type="Logout">Logout</button>
+        </div>
+
+        <div class="formWrapper">
+            
+            <section>
+
+                <div class="button">
+                    <button type = "button"><img src = "images/icon_delete.png" name="edit" width="18" height="20"></button>
+                </div>
+        
+                <label for="number">ID </label>
+                <input type="number" id="id" name="id">
+
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Key holder">
+
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" placeholder="A red key holder">
+
+                <label for="image">Image</label>
+                <input type="image"><img alt="image" id="image" src="images/Key holder.jpg" width="100" height="100"/>
+                <div class="replace">
+                    <button type="image">Replace Image</button>
+                </div>
+
+                <label for="category">Category </label>
+                <select id="category" name="category">
+                    <option value="Toys">Toys</option>
+                    <option value="Mental casting">Mental casting</option>
+                    <option value="Earing">Earing</option>
+                    <option value="Key holders">Key holders</option>
+                </select>
+
+                <label for="status">Status </label>
+                <select id="status" name="status">
+                    <option value="Public">Public</option>
+                    <option value="Private">Private</option>
+                </select>
+                        
+                <div class="y">
+                    <a href="list_toys.html"><button type="cancel">Cancel</button></a>
+                    <button type="save changes">Save changes</button>
+                </div>
+
+            </section>
+
+        </div>
+    </body>
+
+    <script>
+        // See which toy ID we should display
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        console.log(`Toy ID is ${id}`);
+
+        // Async operation - we need to wait for it to finish!
+        async function loadToys() {
+            let toysResponse = await fetch("toys.json");
+            let toys = await toysResponse.json();
+
+            for (let toy of toys) {
+                if (toy.id == id) {
+                    // We found the toy we're looking for! Put its information into the form
+                    console.log(toy);
+                    document.getElementById("id").value = toy.id;
+                    document.getElementById("name").value = toy.name;
+                    document.getElementById("description").value = toy.description;
+                    document.getElementById("image").src = toy.image;
+                    document.getElementById("category").value = toy.category;
+                    document.getElementById("status").value = toy.status;
+                }
+            }
+        }
+
+        loadToys();
+    </script>
+</html>

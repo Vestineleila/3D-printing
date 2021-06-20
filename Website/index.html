@@ -31,7 +31,9 @@
             let itemList = document.getElementById('itemList');
 
             for (let toy of toys) {
-                itemList.innerHTML += '<div class="itemCard"><div class="itemCardTitle">' + toy.name + '</div><img class="itemCardThumbnail" src="' + toy.image + '"><button class="itemCardButton">Download</button></div>';
+                if (toy.status == "Public") {
+                    itemList.innerHTML += '<div class="itemCard"><div class="itemCardTitle">' + toy.name + '</div><img class="itemCardThumbnail" src="' + toy.image + '"><button class="itemCardButton">Download</button></div>';
+                }
             }
         }
 
