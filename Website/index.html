@@ -25,14 +25,19 @@
     <script>
         // Async operation - we need to wait for it to finish!
         async function loadToys() {
-            let toysResponse = await fetch("toys.json");
+            let toysResponse = await fetch("http://ec2-3-8-117-104.eu-west-2.compute.amazonaws.com:8080/vestines3dstuff/toys");
             let toys = await toysResponse.json();
 
             let itemList = document.getElementById('itemList');
 
             for (let toy of toys) {
                 if (toy.status == "Public") {
-                    itemList.innerHTML += '<div class="itemCard"><div class="itemCardTitle">' + toy.name + '</div><img class="itemCardThumbnail" src="' + toy.image + '"><button class="itemCardButton">Download</button></div>';
+                    itemList.innerHTML +=
+                    `<div class="itemCard">
+                        <div class="itemCardTitle">${toy.name}</div>
+                        <img class="itemCardThumbnail" src="${toy.image}">
+                        <button class="itemCardButton">Download</button>
+                    </div>`;
                 }
             }
         }
