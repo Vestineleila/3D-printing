@@ -47,7 +47,7 @@
                         
                 <div class="y">
                     <a href="list_toys.html"><button type="cancel">Cancel</button></a>
-                    <button type="save changes" onclick="createToy()">Create toy</button>
+                    <button type="save changes" onclick="createToy()">Save changes</button>
                 </div>
 
             </section>
@@ -65,16 +65,16 @@
                 "status": document.getElementById("status").value
             }
 
-            // CHALLENGE: Update this so that it correctly adds the new toy!
-            // And then sends the user back to the toy list.
             await fetch(
-                `http://ec2-3-8-117-104.eu-west-2.compute.amazonaws.com:8080/vestines3dstuff/toys/${id}`,
+                `http://ec2-3-8-117-104.eu-west-2.compute.amazonaws.com:8080/vestines3dstuff/toys`,
                 {
-                    method: "PUT",
-                    body: JSON.stringify(updatedToy),
+                    method: "POST",
+                    body: JSON.stringify(newToy),
                     headers: {'Content-Type': 'application/json'}
                 },
             );
+
+            window.location.href = "list_toys.html"; // Send back to the toy listing
         }
     </script>
 </html>

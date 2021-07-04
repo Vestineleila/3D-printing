@@ -25,6 +25,31 @@
     </body>
 
     <script>
+        // See what the user searched for
+        const urlParams = new URLSearchParams(window.location.search);
+        const query = urlParams.get('query');
+        console.log(`Search query is ${query}`);
+
+        // Search query matching functions
+        function stringMatches(text, query) {
+            let textLower = text.toLowerCase();
+            let queryLower = query.toLowerCase();
+            
+            let splitQuery = queryLower.split(' ');
+            
+            for (term of splitQuery) {
+                let matched = textLower.includes(term);
+                if (!matched) return false;
+            }
+
+            return true;
+        }
+
+        function toyMatches(toy, query) {
+            let combinedNameAndDescription = toy.name + " " + toy.description;
+            return stringMatches(combinedNameAndDescription, query);
+        }
+
         // Async operation - we need to wait for it to finish!
         async function loadToys() {
             let toysResponse = await fetch("http://ec2-3-8-117-104.eu-west-2.compute.amazonaws.com:8080/vestines3dstuff/toys");
@@ -33,7 +58,7 @@
             let itemList = document.getElementById('itemList');
 
             for (let toy of toys) {
-                if (toy.status == "Public") {
+                if (toy.status == "Public" && toyMatches(toy, query)) {
                     itemList.innerHTML +=
                     `<div class="itemCard">
                         <div class="itemCardTitle">${toy.name}</div>

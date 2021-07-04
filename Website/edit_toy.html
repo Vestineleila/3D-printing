@@ -21,11 +21,8 @@
             <section>
 
                 <div class="button">
-                    <button type = "button"><img src = "images/icon_delete.png" name="edit" width="18" height="20"></button>
+                    <button type = "button"><img src = "images/icon_delete.png" name="edit" width="18" height="20" onclick="deleteToy()"></button>
                 </div>
-        
-                <label for="number">ID </label>
-                <input type="number" id="id" name="id">
 
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" placeholder="Key holder">
@@ -75,7 +72,6 @@
             let toy = await toysResponse.json();
 
             // We found the toy we're looking for! Put its information into the form
-            document.getElementById("id").value = toy.id;
             document.getElementById("name").value = toy.name;
             document.getElementById("description").value = toy.description;
             document.getElementById("image").src = toy.image;
@@ -104,6 +100,17 @@
                     headers: {'Content-Type': 'application/json'}
                 },
             );
+
+            window.location.href = "list_toys.html"; // Send back to the toy listing
+        }
+
+        async function deleteToy() {
+            console.log(`Deleting toy ${id}`);
+            await fetch(
+                `http://ec2-3-8-117-104.eu-west-2.compute.amazonaws.com:8080/vestines3dstuff/toys/${id}`,
+                {method: 'DELETE'}
+            );
+            window.location.href = "list_toys.html"; // Send back to the toy listing
         }
     </script>
 </html>
