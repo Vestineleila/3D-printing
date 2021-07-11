@@ -34,20 +34,27 @@
     <script>
         // Async operation - we need to wait for it to finish!
         async function loadToys() {
-            let toysResponse = await fetch("http://ec2-3-8-117-104.eu-west-2.compute.amazonaws.com:8080/vestines3dstuff/toys");
-            let toys = await toysResponse.json();
+            try {
+                let toysResponse = await fetch("http://ec2-3-8-117-104.eu-west-2.compute.amazonaws.com:8080/vestines3dstuff/toys");
 
-            let itemList = document.getElementById('itemList');
+                let toys = await toysResponse.json();
 
-            for (let toy of toys) {
-                if (toy.status == "Public") {
-                    itemList.innerHTML +=
-                    `<div class="itemCard">
-                        <div class="itemCardTitle">${toy.name}</div>
-                        <img class="itemCardThumbnail" src="${toy.image}">
-                        <button class="itemCardButton">Download</button>
-                    </div>`;
+                let itemList = document.getElementById('itemList');
+
+                for (let toy of toys) {
+                    if (toy.status == "Public") {
+                        itemList.innerHTML +=
+                        `<div class="itemCard">
+                            <div class="itemCardTitle">${toy.name}</div>
+                            <img class="itemCardThumbnail" src="${toy.image}">
+                            <button class="itemCardButton">Download</button>
+                        </div>`;
+                    }
                 }
+            }
+            catch (err) {
+                let itemList = document.getElementById('itemList');
+                itemList.innerHTML = "Error getting toys from server";
             }
         }
 
