@@ -57,8 +57,12 @@ function deleteToy(idToDelete) {
 }
 
 // Extra: Search for matching toys
-function searchToys() {
-    // .....
+function searchToys(searchQuery) {
+    let matchingToys = [];
+    for (let toy of toysDatabase) {
+        // If the toy matches the search query, add it to matchingToys
+    }
+    return matchingToys;
 }
 
 
