@@ -11,11 +11,24 @@ function storeToy(toy) {
     toysDatabase.push(toy);
 
     console.log("Toy stored " + toy.id);
+
+    return toy;
 }
 
 // List all toys
 function listToys() {
     return toysDatabase;
+}
+
+// Retrieve a toy
+function getToy(id) {
+    // Find the toy in the database
+    for (let toyInDatabase of toysDatabase) {
+        if (toyInDatabase.id == id) {
+            return toyInDatabase;
+        }
+    }
+    return null;
 }
 
 // Update a toy
@@ -31,12 +44,13 @@ function updateToy(toyToUpdate) {
             toyInDatabase.status = toyToUpdate.status;
 
             console.log("Toy updated " + toyToUpdate.id);
-            return;
+            return toyInDatabase;
         }
     }
 
     // Toy was not found
     console.log("Toy not found " + toyToUpdate.id);
+    return null;
 }
 
 // Delete a toy
@@ -48,67 +62,72 @@ function deleteToy(idToDelete) {
             // Found it! Delete it
             toysDatabase.splice(toyIndex, 1);
             console.log("Toy deleted " + idToDelete);
-            return;
+            return true;
         }
     }
 
     // Toy was not found
-    console.log("Toy not found " + toyToUpdate.id);
+    console.log("Toy not found " + idToDelete);
+    return false;
 }
 
 // Extra: Search for matching toys
 function searchToys(searchQuery) {
     let matchingToys = [];
     for (let toy of toysDatabase) {
+        // CHALLENGE! Make this work
         // If the toy matches the search query, add it to matchingToys
     }
     return matchingToys;
 }
 
 
-// Testing code
-storeToy({
-    "name": "Key holder",
-    "description": "It holds your keys =)",
-    "image": "images/Key holder.jpg",
-    "category": "Key holders",
-    "status": "Public"
+console.log("Running server!");
+
+let express = require("express");
+let app = express();
+app.use(express.json());
+
+app.get("/toys", function (request, response) {
+    let toys = listToys();
+    response.send(toys);
 });
 
-storeToy({
-    "name": "Key holder2",
-    "description": "It holds your keys =)",
-    "image": "images/Key holder.jpg",
-    "category": "Key holders",
-    "status": "Public"
+app.post("/toys", function (request, response) {
+    let createdToy = storeToy(request.body);
+    response.send(createdToy);
 });
 
-updateToy({
-    "id": 2,
-    "name": "Key holder2 (updated)",
-    "description": "It holds your keys =) (updated)",
-    "image": "images/Key holder.jpg",
-    "category": "Key holders",
-    "status": "Public"
+app.get("/toys/:toyId", function (request, response) {
+    let toyId = request.params.toyId;
+    let toy = getToy(toyId);
+    response.send(toy);
 });
 
-storeToy({
-    "name": "Key holder2",
-    "description": "It holds your keys =)",
-    "image": "images/Key holder.jpg",
-    "category": "Key holders",
-    "status": "Public"
+app.put("/toys/:toyId", function (request, response) {
+    let toyIdFromUrl = request.params.toyId;
+    let toyFromBody = request.body;
+    if (toyFromBody.id != toyIdFromUrl) {
+        response.send("Toy IDs do not match!!");
+    }
+    else {
+        let updatedToy = updateToy(toyFromBody);
+        response.send(updatedToy);
+    }
 });
 
-storeToy({
-    "name": "Key holder2",
-    "description": "It holds your keys =)",
-    "image": "images/Key holder.jpg",
-    "category": "Key holders",
-    "status": "Public"
+app.delete("/toys/:toyId", function (request, response) {
+    let toyId = request.params.toyId;
+    let wasDeleted = deleteToy(toyId);
+
+    if (wasDeleted) {
+        response.send("Deleted!");
+    }
+    else {
+        response.send("Toy not found!");
+    }
 });
 
-deleteToy(3);
+app.listen(8080);
 
-let toys = listToys();
-console.log("Retrieved toys", toys);
+
