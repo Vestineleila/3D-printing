@@ -56,6 +56,8 @@
     </body>
 
     <script>
+        const serverUrl = "http://localhost:8080/toys";
+
         async function createToy() {
             let newToy = {
                 "name": document.getElementById("name").value,
@@ -66,7 +68,7 @@
             }
 
             await fetch(
-                `http://ec2-3-8-117-104.eu-west-2.compute.amazonaws.com:8080/vestines3dstuff/toys`,
+                `${serverUrl}`,
                 {
                     method: "POST",
                     body: JSON.stringify(newToy),

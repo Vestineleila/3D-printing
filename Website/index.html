@@ -32,10 +32,12 @@
     </body>
 
     <script>
+        const serverUrl = "http://localhost:8080/toys";
+
         // Async operation - we need to wait for it to finish!
         async function loadToys() {
             try {
-                let toysResponse = await fetch("http://ec2-3-8-117-104.eu-west-2.compute.amazonaws.com:8080/vestines3dstuff/toys");
+                let toysResponse = await fetch(`${serverUrl}`);
 
                 let toys = await toysResponse.json();
 

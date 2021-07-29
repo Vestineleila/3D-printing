@@ -62,13 +62,15 @@
 
     <script>
         // See which toy ID we should display
+        const serverUrl = "http://localhost:8080/toys";
+
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');
         console.log(`Toy ID is ${id}`);
 
         // Async operation - we need to wait for it to finish!
         async function loadToys() {
-            let toysResponse = await fetch(`http://ec2-3-8-117-104.eu-west-2.compute.amazonaws.com:8080/vestines3dstuff/toys/${id}`);
+            let toysResponse = await fetch(`${serverUrl}/${id}`);
             let toy = await toysResponse.json();
 
             // We found the toy we're looking for! Put its information into the form
@@ -93,7 +95,7 @@
             }
 
             await fetch(
-                `http://ec2-3-8-117-104.eu-west-2.compute.amazonaws.com:8080/vestines3dstuff/toys/${id}`,
+                `${serverUrl}/${id}`,
                 {
                     method: "PUT",
                     body: JSON.stringify(updatedToy),
@@ -107,7 +109,7 @@
         async function deleteToy() {
             console.log(`Deleting toy ${id}`);
             await fetch(
-                `http://ec2-3-8-117-104.eu-west-2.compute.amazonaws.com:8080/vestines3dstuff/toys/${id}`,
+                `${serverUrl}/${id}`,
                 {method: 'DELETE'}
             );
             window.location.href = "list_toys.html"; // Send back to the toy listing

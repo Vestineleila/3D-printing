@@ -11,6 +11,7 @@ function storeToy(toy) {
     toysDatabase.push(toy);
 
     console.log("Toy stored " + toy.id);
+    saveToyDatabase();
 
     return toy;
 }
@@ -44,6 +45,7 @@ function updateToy(toyToUpdate) {
             toyInDatabase.status = toyToUpdate.status;
 
             console.log("Toy updated " + toyToUpdate.id);
+            saveToyDatabase();
             return toyInDatabase;
         }
     }
@@ -62,6 +64,7 @@ function deleteToy(idToDelete) {
             // Found it! Delete it
             toysDatabase.splice(toyIndex, 1);
             console.log("Toy deleted " + idToDelete);
+            saveToyDatabase();
             return true;
         }
     }
@@ -81,12 +84,49 @@ function searchToys(searchQuery) {
     return matchingToys;
 }
 
+function saveToyDatabase() {
+    let toysAsJson = JSON.stringify(toysDatabase);
+    fs.writeFile("toys.json", toysAsJson, function(err) {
+        if (err) {
+            console.log("Could not write toys database to file");
+        }
+        else {
+            console.log("Successfully wrote toys database to file");
+        }
+    });
+}
 
 console.log("Running server!");
 
 let express = require("express");
+let cors = require("cors");
+let fs = require("fs");
+
+console.log("Reading file");
+fs.readFile("toys.json", function(err, fileContent) {
+    if (err) {
+        console.log("Could not load toys database from file");
+    }
+    else {
+        // Load toys from file
+        let toysFromFile = JSON.parse(fileContent.toString());
+
+        // Add them to our toy database
+        let highestToyIdLoaded = 0;
+        for (let toy of toysFromFile) {
+            toysDatabase.push(toy);
+            if (toy.id > highestToyIdLoaded) {
+                highestToyIdLoaded = toy.id;
+            }
+        }
+        console.log("Loaded toys database from file");
+        currentToyId = highestToyIdLoaded+1;
+    }
+});
+
 let app = express();
-app.use(express.json());
+app.use(express.json());  // Enable feature for JSON
+app.use(cors());          // Enable CORS headers
 
 app.get("/toys", function (request, response) {
     let toys = listToys();

@@ -40,9 +40,11 @@
     </body>
 
     <script>
+        const serverUrl = "http://localhost:8080/toys";
+
         // Async operation - we need to wait for it to finish!
         async function loadToys() {
-            let toysResponse = await fetch("http://ec2-3-8-117-104.eu-west-2.compute.amazonaws.com:8080/vestines3dstuff/toys");
+            let toysResponse = await fetch(`${serverUrl}`);
             let toys = await toysResponse.json();
 
             let itemList = document.getElementById('itemList');
@@ -73,7 +75,7 @@
         async function deleteToy(id) {
             console.log(`Deleting toy ${id}`);
             await fetch(
-                `http://ec2-3-8-117-104.eu-west-2.compute.amazonaws.com:8080/vestines3dstuff/toys/${id}`,
+                `${serverUrl}/${id}`,
                 {method: 'DELETE'}
             );
             window.location.reload(); // Refresh the page
